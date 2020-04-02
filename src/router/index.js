@@ -1,19 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import movieRoute from './movie'
+import mineRoute from './mine'
+import cinemaRoute from './cinema'
 
 Vue.use(VueRouter)
 
-const routes = [{
-        path: '/',
-        name: 'Home',
-        component: Home
-    },
+const routes = [
+    movieRoute,
+    mineRoute,
+    cinemaRoute,
     {
-        path: '/about',
-        name: 'About',
-        component: () =>
-            import ('../views/About.vue')
+        path: '/*',
+        redirect: '/movie'
     }
 ]
 
