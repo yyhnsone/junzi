@@ -1,108 +1,17 @@
 <template>
   <div class="movie_body" ref="movie_body">
     <ul>
-      <li>
+      <li v-for="(item,index) in nowPlaying" :key="index">
         <div class="pic_show">
-          <img src="../../assets/img.jpg" />
+          <img :src="item.img | setWh('128.180')" />
         </div>
         <div class="info_list">
-          <h2>无名之辈</h2>
+          <h2>{{item.nm}} <img v-if="item.version" src="@/assets/maxs.png"/> </h2>
           <p>
             观众评
-            <span class="grade">9.2</span>
+            <span class="grade">{{item.sc}}</span>
           </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
-        </div>
-        <div class="btn_mall">购票</div>
-      </li>
-      <li>
-        <div class="pic_show">
-          <img src="../../assets/img.jpg" />
-        </div>
-        <div class="info_list">
-          <h2>无名之辈</h2>
-          <p>
-            观众评
-            <span class="grade">9.2</span>
-          </p>
-          <p>主演: 陈建斌,任素汐,潘斌龙</p>
-          <p>今天55家影院放映607场</p>
+          <p>主演: {{item.star}}</p>
         </div>
         <div class="btn_mall">购票</div>
       </li>
@@ -112,7 +21,21 @@
 
 <script>
 export default {
-  nmae: "NowPlaying"
+  nmae: "NowPlaying",
+  data(){
+    return{
+      nowPlaying:[]
+    }
+  },
+  mounted(){
+    this.$axios.get('/api/movieOnInfoList?cityId=10').then(res=>{
+      if(res.data.msg === 'ok'){
+        this.nowPlaying = res.data.data.movieList
+      }
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
 };
 </script>
 
